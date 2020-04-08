@@ -1,6 +1,7 @@
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.meta.generics.LongPollingBot;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,10 +10,9 @@ public class Main {
         TelegramBotsApi botsApi = new TelegramBotsApi();
 
         try {
-            botsApi.registerBot(new AlfredBot());
+            botsApi.registerBot((LongPollingBot) new AlfredBot());
         } catch (TelegramApiRequestException e) {
             e.printStackTrace();
         }
-        System.out.println("LoggingTestBot successfully started");
     }
 }
