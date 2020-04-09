@@ -19,11 +19,11 @@ public class AlfredBot extends TelegramLongPollingBot {
             long user_id = update.getMessage().getChat().getId();
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
-            String answer = message_text;
+            String answer = "Нет, " + user_first_name + " это ты - " + message_text;
 
             SendMessage message = new SendMessage()
                     .setChatId(chat_id)
-                    .setText("Нет, " + user_first_name + "это ты - " + answer);
+                    .setText(answer);
 
 
             log(user_first_name, user_last_name, Long.toString(user_id), message_text, answer);
