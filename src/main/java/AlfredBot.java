@@ -9,15 +9,22 @@ public class AlfredBot extends TelegramLongPollingBot {
     private static final Logger log = Logger.getLogger(AlfredBot.class);
 
     public void onUpdateReceived(Update update) {
-        String message = update.getMessage().getText();
-        sendMsg(update.getMessage().getChatId().toString(), message);
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            String user_first_name = update.getMessage().getChat().getFirstName();
+            String user_last_name = update.getMessage().getChat().getLastName();
+            String user_username = update.getMessage().getChat().getUserName();
+
+
+            String message = update.getMessage().getText();
+            sendMsg(update.getMessage().getChatId().toString(), user_first_name, message);
+        }
     }
 
-    public synchronized void sendMsg(String chatId, String s) {
+    public synchronized void sendMsg(String chatId, String name, String s) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
-        sendMessage.setText("Я два раза не повторяю: " + s);
+        sendMessage.setText(name + ", это ты - " + s);
         try{
             execute(sendMessage);
         } catch (TelegramApiException e) {
