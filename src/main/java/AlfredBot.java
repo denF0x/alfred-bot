@@ -29,8 +29,11 @@ public class AlfredBot extends TelegramLongPollingBot {
                 String message_text = update.getMessage().getText();
                 if (message_text.equals("/start")) {
                     answer = "Well, hello there";
-                } else if(message_text.equals("/pic")){
+                }
+                //for photo
+                else if(message_text.equals("/pic")){
                     SendPhoto msg = new SendPhoto()
+                                        .setChatId(chat_id)
                                         .setPhoto("AgACAgIAAxkBAAIC1l6PQ0TJBKRQwisq9rmzaTEuoSdzAAKfrjEb_w54SA0k1NWNUOT5pKS6ki4AAwEAAwIAA3kAA16wAAIYBA")
                                         .setCaption("Photo");
                     try{
@@ -39,8 +42,7 @@ public class AlfredBot extends TelegramLongPollingBot {
                         e.printStackTrace();
                     }
                 }
-
-                //all texts
+                //all else texts
                 else{
                 answer = "Нет, " + user_first_name + " это ты - " + message_text;}
                 sendMsg(answer, chat_id);
