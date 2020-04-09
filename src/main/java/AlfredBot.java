@@ -10,9 +10,6 @@ import java.util.Date;
 
 public class AlfredBot extends TelegramLongPollingBot {
 
-
-    public static boolean flag = false;
-
     public void onUpdateReceived(Update update) {
 
         if (update.hasMessage() && update.getMessage().hasText()) {
@@ -26,7 +23,7 @@ public class AlfredBot extends TelegramLongPollingBot {
 
             SendMessage message = new SendMessage()
                     .setChatId(chat_id)
-                    .setText(answer);
+                    .setText("Нет, " + user_first_name + "это ты - " + answer);
 
 
             log(user_first_name, user_last_name, Long.toString(user_id), message_text, answer);
@@ -50,28 +47,6 @@ public class AlfredBot extends TelegramLongPollingBot {
     }
 
 
-
-
-    //    public void onUpdateReceived(Update update) {
-//        String user_first_name = null;
-//        if (update.hasMessage() && update.getMessage().hasText()) {
-//            user_first_name = update.getMessage().getChat().getFirstName();
-//        }
-//            String message = update.getMessage().getText();
-//            sendMsg(update.getMessage().getChatId().toString(), user_first_name, message);
-//    }
-//
-//    public synchronized void sendMsg(String chatId, String name, String s) {
-//        SendMessage sendMessage = new SendMessage();
-//        sendMessage.enableMarkdown(true);
-//        sendMessage.setChatId(chatId);
-//        sendMessage.setText(name + ", это ты - " + s);
-//        try{
-//            execute(sendMessage);
-//        } catch (TelegramApiException e) {
-//            log.error("Exception: " + e.toString());
-//        }
-//    }
     public String getBotUsername() {
       return System.getenv("userName");
 
