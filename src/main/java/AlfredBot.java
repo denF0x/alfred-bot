@@ -4,10 +4,14 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +46,68 @@ public class AlfredBot extends TelegramLongPollingBot {
                         e.printStackTrace();
                     }
                 }
+                //keyboard
+                else if (message_text.equals("/markup")){
+                    SendMessage message = new SendMessage() // Create a message object object
+                            .setChatId(chat_id)
+                            .setText("Here is your keyboard");
+
+                    ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+                    List<KeyboardRow> keyboard = new ArrayList<>();
+
+                    KeyboardRow row = new KeyboardRow();
+                    row.add("Row 1 Button 1");
+                    row.add("Row 1 Button 2");
+                    row.add("Row 1 Button 3");
+                    keyboard.add(row);
+
+                    row = new KeyboardRow();
+                    row.add("Row 2 Button 1");
+                    row.add("Row 2 Button 2");
+                    row.add("Row 2 Button 3");
+                    keyboard.add(row);
+
+                    keyboardMarkup.setKeyboard(keyboard);
+
+                    message.setReplyMarkup(keyboardMarkup);
+                    try{
+                        execute(message);
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //first button
+                else if (message_text.equals("Row 1 Button 1")){
+                    SendPhoto msg = new SendPhoto()
+                                    .setChatId(chat_id)
+                                    .setPhoto("AgACAgIAAxkBAAIC1l6PQ0TJBKRQwisq9rmzaTEuoSdzAAKfrjEb_w54SA0k1NWNUOT5pKS6ki4AAwEAAwIAA3kAA16wAAIYBA")
+                                    .setCaption("Photo");
+                    try{
+                        execute(msg);
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //hide keyboard
+                else if (message_text.equals("/hide")){
+                    SendMessage msg = new SendMessage()
+                            .setChatId(chat_id)
+                            .setText("Keyboard hidden");
+                    ReplyKeyboardRemove keyboardMarkup = new ReplyKeyboardRemove();
+                    msg.setReplyMarkup(keyboardMarkup);
+                    try {
+                        execute(msg); // Call method to send the photo
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+
+
+
+
+
                 //all else texts
                 else{
                 answer = "Нет, " + user_first_name + " это ты - " + message_text;}
