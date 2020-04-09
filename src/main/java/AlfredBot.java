@@ -33,6 +33,11 @@ public class AlfredBot extends TelegramLongPollingBot {
                     SendPhoto msg = new SendPhoto()
                                         .setPhoto("AgACAgIAAxkBAAIC1l6PQ0TJBKRQwisq9rmzaTEuoSdzAAKfrjEb_w54SA0k1NWNUOT5pKS6ki4AAwEAAwIAA3kAA16wAAIYBA")
                                         .setCaption("Photo");
+                    try{
+                        execute(msg);
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 //all texts
