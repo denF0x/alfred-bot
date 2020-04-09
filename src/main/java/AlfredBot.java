@@ -1,6 +1,4 @@
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -19,7 +17,7 @@ public class AlfredBot extends TelegramLongPollingBot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
-        sendMessage.setText(s);
+        sendMessage.setText("Я два раза не повторяю: " + s);
         try{
             execute(sendMessage);
         } catch (TelegramApiException e) {
