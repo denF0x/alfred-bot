@@ -27,14 +27,12 @@ public class AlfredBot extends TelegramLongPollingBot {
         }
     }
     public String getBotUsername() {
-        return "Alfred";
-      //return System.getenv("userName");
+      return System.getenv("userName");
 
     }
 
     public String getBotToken() {
-        return "492790618:AAE7VjB5BypdpRX2KT0VicWJMRGYlNrd_pc";
-       // return System.getenv("token");
+        return System.getenv("token");
     }
 }
 
