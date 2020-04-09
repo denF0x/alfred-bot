@@ -25,20 +25,21 @@ public class AlfredBot extends TelegramLongPollingBot {
 
             //if we got text
             if (update.getMessage().hasText()) {
+                String answer = null;
                 String message_text = update.getMessage().getText();
-                String answer = "Нет, " + user_first_name + " это ты - " + message_text;
-
-                SendMessage message = new SendMessage()
-                        .setChatId(chat_id)
-                        .setText(answer);
-
-
-                log(user_first_name, user_last_name, Long.toString(user_id), message_text, answer);
-                try {
-                    execute(message);
-                } catch (TelegramApiException e) {
-                    e.printStackTrace();
+                if (message_text.equals("/start")) {
+                    answer = "Well, hello there";
+                } else if(message_text.equals("/pic")){
+                    SendPhoto msg = new SendPhoto()
+                                        .setPhoto("AgACAgIAAxkBAAIC1l6PQ0TJBKRQwisq9rmzaTEuoSdzAAKfrjEb_w54SA0k1NWNUOT5pKS6ki4AAwEAAwIAA3kAA16wAAIYBA")
+                                        .setCaption("Photo");
                 }
+
+                //all texts
+                else{
+                answer = "Нет, " + user_first_name + " это ты - " + message_text;}
+                sendMsg(answer, chat_id);
+                log(user_first_name, user_last_name, Long.toString(user_id), message_text, answer);
             }
 
 
@@ -48,9 +49,9 @@ public class AlfredBot extends TelegramLongPollingBot {
                 List<PhotoSize> photos = update.getMessage().getPhoto();
                 // Know file_id
                 String f_id = photos.stream()
-                            .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
-                            .findFirst()
-                            .orElse(null).getFileId();
+                        .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
+                        .findFirst()
+                        .orElse(null).getFileId();
                 // Know photo width
                 int f_width = photos.stream()
                         .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
@@ -65,17 +66,31 @@ public class AlfredBot extends TelegramLongPollingBot {
                 String caption = "file_id: " + f_id + "\nwidth: " + Integer.toString(f_width) + "\nheight: " + Integer.toString(f_height);
 
                 SendPhoto msg = new SendPhoto()
-                                    .setChatId(chat_id)
-                                    .setPhoto(f_id)
-                                    .setCaption(caption);
+                        .setChatId(chat_id)
+                        .setPhoto(f_id)
+                        .setCaption(caption);
 
-                try{
+                try {
                     execute(msg);
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
 
             }
+        }
+    }
+
+    private void sendMsg(String answer, long chat_id) {
+
+
+        SendMessage message = new SendMessage()
+                .setChatId(chat_id)
+                .setText(answer);
+
+        try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 
