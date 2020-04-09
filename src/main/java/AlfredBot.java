@@ -27,7 +27,7 @@ public class AlfredBot extends TelegramLongPollingBot {
         }
     }
     public String getBotUsername() {
-      return "username";
+      return "userName";
 
     }
 
