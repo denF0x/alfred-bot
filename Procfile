@@ -1,1 +1,1 @@
-bot: java -jar build/libs/alfred_telegram_bot-1.0-all.jar
+worker: sh target/bin/workerBot

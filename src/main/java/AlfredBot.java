@@ -1,33 +1,29 @@
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.bots.TelegramWebhookBot;
-import org.telegram.telegrambots.meta.ApiContext;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class AlfredBot extends TelegramLongPollingBot {
 
+    private static final Logger log = Logger.getLogger(AlfredBot.class);
 
-    protected AlfredBot() {
-        super();
-    }
     public void onUpdateReceived(Update update) {
+        String message = update.getMessage().getText();
+        sendMsg(update.getMessage().getChatId().toString(), message);
+    }
 
-        // We check if the update has a message and the message has text
-        if (update.hasMessage() && update.getMessage().hasText()) {
-            // Set variables
-            String message_text = update.getMessage().getText();
-            long chat_id = update.getMessage().getChatId();
-            System.out.println(chat_id + " " + message_text);
-            SendMessage message = new SendMessage() // Create a message object object
-                    .setChatId(chat_id)
-                    .setText(message_text);
-            try {
-                execute(message); // Sending our message object to user
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+    public synchronized void sendMsg(String chatId, String s) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.enableMarkdown(true);
+        sendMessage.setChatId(chatId);
+        sendMessage.setText(s);
+        try{
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            log.error("Exception: " + e.toString());
         }
     }
 
@@ -35,7 +31,6 @@ public class AlfredBot extends TelegramLongPollingBot {
       return System.getenv("username");
 
     }
-
 
     public String getBotToken() {
         return System.getenv("token");
