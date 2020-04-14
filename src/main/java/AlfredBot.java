@@ -61,13 +61,9 @@ public class AlfredBot extends TelegramLongPollingBot {
 
         else if(messageText.equals("Утро")) {
             answer = Answers.getMorningAnswer();
-            sendMsg(answer, chat_id);
-            log(message, answer);
         }
         else if(messageText.equals("Вечер")) {
             answer = Answers.getEveningAnswer();
-            sendMsg(answer, chat_id);
-            log(message, answer);
         }
 
         //all else texts

@@ -9,15 +9,12 @@ public class Answers {
      private static List<String> eveningAnswers = new ArrayList<>();
 
 
-
-
-
     public static String getMorningAnswer() {
         fillMorningList();
         try {
             return morningAnswers.get(2);
             //return morningAnswers.get((int) (Math.random() * 10));
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             return "Хуютро";
         }
     }
@@ -27,7 +24,7 @@ public class Answers {
 
         addToMorningList("А кто это у нас тут проснулься? Ты проснулься!");
         addToMorningList("Очередное карантинное утро. Не правда ли замечательно?");
-        addToMorningList("Мороз и солнце.\\n День чудесный.\\n Еще не сдохли мы?\\n Прелестно");
+        addToMorningList("Мороз и солнце.\n День чудесный.\n Еще не сдохли мы?\n Прелестно");
 
     }
 
