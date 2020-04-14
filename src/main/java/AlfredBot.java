@@ -107,7 +107,6 @@ public class AlfredBot extends TelegramLongPollingBot {
 
     private void sendMsg(String answer, long chat_id) {
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-        Markup
         List<KeyboardRow> keyboard = new ArrayList<>();
        KeyboardRow row = new KeyboardRow().;
        row.add("/pic");
