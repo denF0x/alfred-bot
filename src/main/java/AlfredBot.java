@@ -1,14 +1,10 @@
-import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -24,13 +20,13 @@ public class AlfredBot extends TelegramLongPollingBot {
 
     public void onUpdateReceived(Update update) {
         //for all for now
-        if(update.hasMessage()) {
+        if (update.hasMessage()) {
             Message message = update.getMessage();
-            if(message.hasText()) {
+            if (message.hasText()) {
                 handleTextMessage(message);
 
             }
-            if(message.hasPhoto()) {
+            if (message.hasPhoto()) {
                 handlePhotoMessage(message);
             }
         }
@@ -44,73 +40,86 @@ public class AlfredBot extends TelegramLongPollingBot {
         long chat_id = message.getChatId();
 
         //if we got text
-            String answer = null;
-            String message_text = message.getText();
-            if (message_text.equals("/start")) {
-                answer = "Well, hello there";
+        String answer = null;
+        String messageText = message.getText();
+        if (messageText.equals("/start")) {
+            answer = "Well, hello there";
+        }
+        //for photo
+        else if (messageText.equals("/pic")) {
+            SendPhoto msg = new SendPhoto()
+                    .setChatId(chat_id)
+                    .setPhoto("AgACAgIAAxkBAAIC1l6PQ0TJBKRQwisq9rmzaTEuoSdzAAKfrjEb_w54SA0k1NWNUOT5pKS6ki4AAwEAAwIAA3kAA16wAAIYBA")
+                    .setCaption("Photo");
+            try {
+                execute(msg);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
             }
-            //for photo
-            else if(message_text.equals("/pic")){
-                SendPhoto msg = new SendPhoto()
-                        .setChatId(chat_id)
-                        .setPhoto("AgACAgIAAxkBAAIC1l6PQ0TJBKRQwisq9rmzaTEuoSdzAAKfrjEb_w54SA0k1NWNUOT5pKS6ki4AAwEAAwIAA3kAA16wAAIYBA")
-                        .setCaption("Photo");
-                try{
-                    execute(msg);
-                } catch (TelegramApiException e) {
-                    e.printStackTrace();
-                }
-            }
+        }
 
-            //all else texts
-            else{
-                answer = "Нет, " + user_first_name + " это ты - " + message_text;}
+
+        if (messageText.equals("Утро")) {
+            answer = Answers.getMorningAnswer();
             sendMsg(answer, chat_id);
             log(message, answer);
+        }
+        if (messageText.equals("Вечер")) {
+            answer = Answers.getEveningAnswer();
+            sendMsg(answer, chat_id);
+            log(message, answer);
+        }
+
+        //all else texts
+        else {
+            answer = "Нет, " + user_first_name + " это ты - " + messageText;
+        }
+        sendMsg(answer, chat_id);
+        log(message, answer);
 
     }
 
 
     private void handlePhotoMessage(Message message) {
         //if we got photo
-            List<PhotoSize> photos = message.getPhoto();
-            // Know file_id
-            String f_id = photos.stream()
-                    .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
-                    .findFirst()
-                    .orElse(null).getFileId();
-            // Know photo width
-            int f_width = photos.stream()
-                    .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
-                    .findFirst()
-                    .orElse(null).getWidth();
-            // Know photo height
-            int f_height = photos.stream()
-                    .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
-                    .findFirst()
-                    .orElse(null).getHeight();
+        List<PhotoSize> photos = message.getPhoto();
+        // Know file_id
+        String f_id = photos.stream()
+                .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
+                .findFirst()
+                .orElse(null).getFileId();
+        // Know photo width
+        int f_width = photos.stream()
+                .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
+                .findFirst()
+                .orElse(null).getWidth();
+        // Know photo height
+        int f_height = photos.stream()
+                .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
+                .findFirst()
+                .orElse(null).getHeight();
 
-            String caption = "file_id: " + f_id + "\nwidth: " + Integer.toString(f_width) + "\nheight: " + Integer.toString(f_height);
+        String caption = "file_id: " + f_id + "\nwidth: " + Integer.toString(f_width) + "\nheight: " + Integer.toString(f_height);
 
-            SendPhoto msg = new SendPhoto()
-                    .setChatId(message.getChatId())
-                    .setPhoto(f_id)
-                    .setCaption(caption);
-            log(message, "Photo");
-            try {
-                execute(msg);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-
+        SendPhoto msg = new SendPhoto()
+                .setChatId(message.getChatId())
+                .setPhoto(f_id)
+                .setCaption(caption);
+        log(message, "Photo");
+        try {
+            execute(msg);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
+
+    }
 
     private void sendMsg(String answer, long chat_id) {
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboard = new ArrayList<>();
-       KeyboardRow row = new KeyboardRow();
-       row.add("/pic");
-       row.add("/start");
+        KeyboardRow row = new KeyboardRow();
+        row.add("Утро");
+        row.add("Вечер");
         keyboard.add(row);
         keyboardMarkup.setResizeKeyboard(true);
         keyboardMarkup.setKeyboard(keyboard);
