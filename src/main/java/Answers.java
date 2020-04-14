@@ -33,7 +33,7 @@ public class Answers {
 
     public static String getMorningAnswer() {
         try {
-            return morningAnswers.get(3);
+            return morningAnswers.get(2);
             //return morningAnswers.get((int) (Math.random() * 10));
         } catch (Exception e) {
             return "Хуютро";
