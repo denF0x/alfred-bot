@@ -41,20 +41,3 @@ public class Answers {
         this.morningAnswers.add(text);
     };
 }
-class Test {
-    ArrayList<String> morning = new ArrayList<>();
-
-    morningAnswers.add("А кто это у нас тут проснулься? Ты проснулься!");
-        morningAnswers.add("Очередное карантинное утро. Не правда ли замечательно?");
-        morningAnswers.add("Мороз и солнце.\n День чудесный.\n Еще не сдохли мы?\n Прелестно");
-        morningAnswers.add("");
-        morningAnswers.add("");
-        morningAnswers.add("");
-        morningAnswers.add("");
-        morningAnswers.add("");
-        morningAnswers.add("");
-        morningAnswers.add("");
-    public static void main(String[] args) {
-        System.out.println(morningAnswers.get(2));
-    }
-}
