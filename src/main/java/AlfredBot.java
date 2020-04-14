@@ -48,8 +48,6 @@ public class AlfredBot extends TelegramLongPollingBot {
             String message_text = message.getText();
             if (message_text.equals("/start")) {
                 answer = "Well, hello there";
-                InlineKeyboardMarkup markupInLine = new InlineKeyboardMarkup();
-
             }
             //for photo
             else if(message_text.equals("/pic")){
@@ -108,7 +106,13 @@ public class AlfredBot extends TelegramLongPollingBot {
         }
 
     private void sendMsg(String answer, long chat_id) {
-
+        InlineKeyboardMarkup markupInLine = new InlineKeyboardMarkup();
+        List<InlineKeyboardButton> keyboardRow1 = new ArrayList<>();
+        keyboardRow1.add(new InlineKeyboardButton().setText("/pic"));
+        keyboardRow1.add(new InlineKeyboardButton().setText("/start"));
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        keyboard.add(keyboardRow1);
+        markupInLine.setKeyboard(keyboard);
 
         SendMessage message = new SendMessage()
                 .setChatId(chat_id)
