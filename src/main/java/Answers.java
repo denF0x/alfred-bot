@@ -4,7 +4,7 @@ import java.util.List;
 public class Answers {
 
     private ArrayList<String> morningAnswers = new ArrayList<>();
-    private List<String> eveningAnswers = new ArrayList<>();
+    private ArrayList<String> eveningAnswers = new ArrayList<>();
 
     Answers() {
         morningAnswers.add("А кто это у нас тут проснулься? Ты проснулься!");
@@ -30,20 +30,11 @@ public class Answers {
         eveningAnswers.add("Засыпай, и пусть твоя подушка будет мягкая как зефирка");
     }
 
-    public String getMorningAnswer() {
-        try {
-            return morningAnswers.get((int) (Math.random() * 10));
-        } catch (Exception e) {
-            return "Хуютро";
-        }
+    public ArrayList<String> getMorningAnswers() {
+        return morningAnswers;
     }
 
-    public String getEveningAnswer() {
-        try {
-            return eveningAnswers.get((int) (Math.random() * 10));
-        } catch (Exception e) {
-            return "Хуечер";
-        }
+    public ArrayList<String> getEveningAnswers() {
+        return eveningAnswers;
     }
-
 }

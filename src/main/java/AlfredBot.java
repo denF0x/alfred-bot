@@ -18,6 +18,8 @@ import java.util.List;
 
 public class AlfredBot extends TelegramLongPollingBot {
     Answers answers = new Answers();
+    ArrayList<String> morningAnswers = answers.getMorningAnswers();
+    ArrayList<String> eveningAnswers = answers.getEveningAnswers();
 
     Photos photos = new Photos();
     ArrayList<String> morningPhotos = photos.getMorningPhotos();
@@ -48,6 +50,7 @@ public class AlfredBot extends TelegramLongPollingBot {
 
         //if we got text
         String answer = null;
+        String photoId = null;
         String messageText = message.getText();
         if (messageText.equals("/start")) {
             answer = "Well, hello there";
@@ -77,17 +80,20 @@ public class AlfredBot extends TelegramLongPollingBot {
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
-        } else if (messageText.equals("Утро")) {
-            answer = answers.getMorningAnswer();
-            sendMsgWithPhoto(answer, chat_id, morningPhotos);
+        } else if (messageText.equals("Утро") || messageText.equals("Вечер")) {
+            if (messageText.equals("Утро")) {
+                answer = Utils.getRandomStringFromListSizeOfList(morningAnswers);
+                photoId = Utils.getRandomStringFromListSizeOfList(morningPhotos);
+            }
+            if (messageText.equals("Вечер")) {
+                answer = Utils.getRandomStringFromListSizeOfList(eveningAnswers);
+                photoId = Utils.getRandomStringFromListSizeOfList(eveningPhotos);
+            }
+            sendMsgWithPhoto(answer, chat_id, photoId);
             log(message, "Random photo " + answer);
             alreadySent = true;
-        } else if (messageText.equals("Вечер")) {
-            answer = answers.getEveningAnswer();
-            sendMsgWithPhoto(answer, chat_id, eveningPhotos);
-            log(message, "Random photo "  + answer);
-            alreadySent = true;
         }
+
 
         //all else texts
         else {
@@ -145,10 +151,10 @@ public class AlfredBot extends TelegramLongPollingBot {
         }
     }
 
-    private void sendMsgWithPhoto(String answer, long chat_id, ArrayList<String> photoSet) {
+    private void sendMsgWithPhoto(String answer, long chat_id, String PhotoId) {
         SendPhoto photoMessage = new SendPhoto()
                         .setChatId(chat_id)
-                        .setPhoto(photoSet.get((int) (Math.random()* photoSet.size())))
+                        .setPhoto(PhotoId)
                         .setCaption(answer);
         try {
             execute(photoMessage);
