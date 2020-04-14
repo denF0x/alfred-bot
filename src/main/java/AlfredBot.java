@@ -19,6 +19,11 @@ import java.util.List;
 public class AlfredBot extends TelegramLongPollingBot {
     Answers answers = new Answers();
 
+    Photos photos = new Photos();
+    ArrayList<String> morningPhotos = photos.getMorningPhotos();
+    ArrayList<String> eveningPhotos = photos.getEveningPhotos();
+
+
     public void onUpdateReceived(Update update) {
         //for all for now
         if (update.hasMessage()) {
@@ -34,6 +39,7 @@ public class AlfredBot extends TelegramLongPollingBot {
     }
 
     private void handleTextMessage(Message message) {
+        boolean alreadySent = false;
         String user_first_name = message.getChat().getFirstName();
         String user_last_name = message.getChat().getLastName();
         String user_username = message.getChat().getUserName();
@@ -45,6 +51,20 @@ public class AlfredBot extends TelegramLongPollingBot {
         String messageText = message.getText();
         if (messageText.equals("/start")) {
             answer = "Well, hello there";
+            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+            List<KeyboardRow> keyboard = new ArrayList<>();
+            KeyboardRow row = new KeyboardRow();
+            row.add("Утро");
+            row.add("Вечер");
+            keyboard.add(row);
+            keyboardMarkup.setResizeKeyboard(true);
+            keyboardMarkup.setKeyboard(keyboard);
+            SendMessage startMsg = new SendMessage()
+                    .setChatId(chat_id)
+                    .setText(answer);
+            startMsg.setReplyMarkup(keyboardMarkup);
+            alreadySent = true;
+
         }
         //for photo
         else if (messageText.equals("/pic")) {
@@ -57,27 +77,28 @@ public class AlfredBot extends TelegramLongPollingBot {
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
-        }
-
-
-        else if(messageText.equals("Утро")) {
+        } else if (messageText.equals("Утро")) {
             answer = answers.getMorningAnswer();
-        }
-        else if(messageText.equals("Вечер")) {
+            sendMsgWithPhoto(answer, chat_id, morningPhotos);
+            log(message, "Random photo " + answer);
+            alreadySent = true;
+        } else if (messageText.equals("Вечер")) {
             answer = answers.getEveningAnswer();
+            sendMsgWithPhoto(answer, chat_id, eveningPhotos);
+            log(message, "Random photo "  + answer);
+            alreadySent = true;
         }
 
         //all else texts
         else {
             answer = "Нет, " + user_first_name + " это ты - " + messageText;
         }
-
-
+        if(!alreadySent){
         sendMsg(answer, chat_id);
         log(message, answer);
+        }
 
     }
-
 
     private void handlePhotoMessage(Message message) {
         //if we got photo
@@ -114,24 +135,27 @@ public class AlfredBot extends TelegramLongPollingBot {
     }
 
     private void sendMsg(String answer, long chat_id) {
-        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        KeyboardRow row = new KeyboardRow();
-        row.add("Утро");
-        row.add("Вечер");
-        keyboard.add(row);
-        keyboardMarkup.setResizeKeyboard(true);
-        keyboardMarkup.setKeyboard(keyboard);
-
         SendMessage message = new SendMessage()
                 .setChatId(chat_id)
                 .setText(answer);
-        message.setReplyMarkup(keyboardMarkup);
         try {
             execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+    }
+
+    private void sendMsgWithPhoto(String answer, long chat_id, ArrayList<String> photoSet) {
+        SendPhoto photoMessage = new SendPhoto()
+                        .setChatId(chat_id)
+                        .setPhoto(photoSet.get((int) (Math.random()* photoSet.size())))
+                        .setCaption(answer);
+        try {
+            execute(photoMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
