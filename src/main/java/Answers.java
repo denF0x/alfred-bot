@@ -1,6 +1,4 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Answers {
@@ -40,15 +38,15 @@ public class Answers {
         morningAnswers.add("С добрым утром! Желаю ярких эмоций");
     }
     private static void fillEveningList() {
-       eveningAnswers.add("");
-       eveningAnswers.add("");
-       eveningAnswers.add("");
-       eveningAnswers.add("");
-       eveningAnswers.add("");
-       eveningAnswers.add("");
-       eveningAnswers.add("");
-       eveningAnswers.add("");
-       eveningAnswers.add("");
-       eveningAnswers.add("");
+       eveningAnswers.add("Не засиживайся допозна, а то опять утро будет после полудня");
+       eveningAnswers.add("Как классно, что завтра никуда не надо. По крайней мере, мне");
+       eveningAnswers.add("Полночь приближается\nПолночь приближается\nПолночь приближается");
+       eveningAnswers.add("Сладких снов! Но помни, что настоящее зло никогда не дремлет");
+       eveningAnswers.add("Помни, что ни один порядочный человек не может уснуть, не почитав книжку перед сном");
+       eveningAnswers.add("А может нафиг это «спать»? Время бинджвотчить сериалы!");
+       eveningAnswers.add("Спокойной ночи! Пусть тебе присняться единорожки");
+       eveningAnswers.add("Спи как маленький барсучок, которого обнимает одеялко");
+       eveningAnswers.add("В любом месте засыпать веселее вместе!");
+       eveningAnswers.add("Засыпай, и пусть твоя подушка будет мягкая как зефирка");
     }
 }
