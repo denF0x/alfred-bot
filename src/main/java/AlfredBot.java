@@ -106,18 +106,18 @@ public class AlfredBot extends TelegramLongPollingBot {
         }
 
     private void sendMsg(String answer, long chat_id) {
-        InlineKeyboardMarkup markupInLine = new InlineKeyboardMarkup();
-        List<InlineKeyboardButton> keyboardRow1 = new ArrayList<>();
-        keyboardRow1.add(new InlineKeyboardButton().setText("/pic"));
-        keyboardRow1.add(new InlineKeyboardButton().setText("/start"));
-        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-        keyboard.add(keyboardRow1);
-        markupInLine.setKeyboard(keyboard);
+        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+        List<KeyboardRow> keyboard = new ArrayList<>();
+       KeyboardRow row = new KeyboardRow();
+       row.add("/pic");
+       row.add("/start");
+        keyboard.add(row);
+        keyboardMarkup.setKeyboard(keyboard);
 
         SendMessage message = new SendMessage()
                 .setChatId(chat_id)
                 .setText(answer);
-        message.setReplyMarkup(markupInLine);
+        message.setReplyMarkup(keyboardMarkup);
         try {
             execute(message);
         } catch (TelegramApiException e) {
