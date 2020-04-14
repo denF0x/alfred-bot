@@ -3,33 +3,22 @@ import java.util.List;
 
 public class Answers {
 
-    private static List<String> morningAnswers = new ArrayList<>();
+    private static ArrayList <String> morningAnswers = new ArrayList<>();
     private static List<String> eveningAnswers = new ArrayList<>();
 
     Answers(){
-        morningAnswers.add("А кто это у нас тут проснулься? Ты проснулься!");
-        morningAnswers.add("Очередное карантинное утро. Не правда ли замечательно?");
-        morningAnswers.add("Мороз и солнце.\n День чудесный.\n Еще не сдохли мы?\n Прелестно");
-        morningAnswers.add("");
-        morningAnswers.add("");
-        morningAnswers.add("");
-        morningAnswers.add("");
-        morningAnswers.add("");
-        morningAnswers.add("");
-        morningAnswers.add("");
-
-        eveningAnswers.add("");
-        eveningAnswers.add("");
-        eveningAnswers.add("");
-        eveningAnswers.add("");
-        eveningAnswers.add("");
-        eveningAnswers.add("");
-        eveningAnswers.add("");
-        eveningAnswers.add("");
-        eveningAnswers.add("");
-        eveningAnswers.add("");
-        eveningAnswers.add("");
+        addToMorningList("А кто это у нас тут проснулься? Ты проснулься!");
+        addToMorningList("Очередное карантинное утро. Не правда ли замечательно?");
+        addToMorningList("Мороз и солнце.\\n День чудесный.\\n Еще не сдохли мы?\\n Прелестно");
+        addToMorningList("");
+        addToMorningList("");
+        addToMorningList("");
+        addToMorningList("");
+        addToMorningList("");
+        addToMorningList("");
+        addToMorningList("");
     }
+
 
     public static String getMorningAnswer() {
         try {
@@ -46,5 +35,26 @@ public class Answers {
         } catch (Exception e) {
             return "Хуечер";
         }
+    }
+
+    public void addToMorningList(String text){
+        this.morningAnswers.add(text);
+    };
+}
+class Test {
+    ArrayList<String> morning = new ArrayList<>();
+
+    morningAnswers.add("А кто это у нас тут проснулься? Ты проснулься!");
+        morningAnswers.add("Очередное карантинное утро. Не правда ли замечательно?");
+        morningAnswers.add("Мороз и солнце.\n День чудесный.\n Еще не сдохли мы?\n Прелестно");
+        morningAnswers.add("");
+        morningAnswers.add("");
+        morningAnswers.add("");
+        morningAnswers.add("");
+        morningAnswers.add("");
+        morningAnswers.add("");
+        morningAnswers.add("");
+    public static void main(String[] args) {
+        System.out.println(morningAnswers.get(2));
     }
 }
