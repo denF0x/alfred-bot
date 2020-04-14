@@ -70,6 +70,8 @@ public class AlfredBot extends TelegramLongPollingBot {
         else {
             answer = "Нет, " + user_first_name + " это ты - " + messageText;
         }
+
+
         sendMsg(answer, chat_id);
         log(message, answer);
 

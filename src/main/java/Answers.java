@@ -12,23 +12,14 @@ public class Answers {
     public static String getMorningAnswer() {
         fillMorningList();
         try {
-            return morningAnswers.get(2);
-            //return morningAnswers.get((int) (Math.random() * 10));
-        } catch (NullPointerException e) {
+            return morningAnswers.get((int) (Math.random() * 10));
+        } catch (Exception e) {
             return "Хуютро";
         }
     }
 
-    private static void fillMorningList() {
-
-
-        addToMorningList("А кто это у нас тут проснулься? Ты проснулься!");
-        addToMorningList("Очередное карантинное утро. Не правда ли замечательно?");
-        addToMorningList("Мороз и солнце.\n День чудесный.\n Еще не сдохли мы?\n Прелестно");
-
-    }
-
     public static String getEveningAnswer() {
+        fillEveningList();
         try {
             return eveningAnswers.get((int) (Math.random() * 10));
         } catch (Exception e) {
@@ -36,7 +27,28 @@ public class Answers {
         }
     }
 
-    public static void addToMorningList(String text){
-        morningAnswers.add(text);
-    };
+    private static void fillMorningList() {
+        morningAnswers.add("А кто это у нас тут проснулься? Ты проснулься!");
+        morningAnswers.add("Очередное карантинное утро. Не правда ли замечательно?");
+        morningAnswers.add("Мороз и солнце.\nДень чудесный.\nЕще не сдохли вы?\nПрелестно");
+        morningAnswers.add("Утро должно начинаться со Стопгейма");
+        morningAnswers.add("Самое время покормить кошку");
+        morningAnswers.add("Ура! Новый день, пора листать все социальные сети до самого дна");
+        morningAnswers.add("Погодка так и шепчет пойти сделать кофе");
+        morningAnswers.add("Добро пожаловать в День Сурка!\nЭто лучший день. Потому что он единственный");
+        morningAnswers.add("Хочу чтобы Солнышко улыбалось так же как и ты!");
+        morningAnswers.add("С добрым утром! Желаю ярких эмоций");
+    }
+    private static void fillEveningList() {
+       eveningAnswers.add("");
+       eveningAnswers.add("");
+       eveningAnswers.add("");
+       eveningAnswers.add("");
+       eveningAnswers.add("");
+       eveningAnswers.add("");
+       eveningAnswers.add("");
+       eveningAnswers.add("");
+       eveningAnswers.add("");
+       eveningAnswers.add("");
+    }
 }
