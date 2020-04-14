@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 public class AlfredBot extends TelegramLongPollingBot {
+    Answers answers = new Answers();
 
     public void onUpdateReceived(Update update) {
         //for all for now
@@ -60,10 +61,10 @@ public class AlfredBot extends TelegramLongPollingBot {
 
 
         else if(messageText.equals("Утро")) {
-            answer = Answers.getMorningAnswer();
+            answer = answers.getMorningAnswer();
         }
         else if(messageText.equals("Вечер")) {
-            answer = Answers.getEveningAnswer();
+            answer = answers.getEveningAnswer();
         }
 
         //all else texts
