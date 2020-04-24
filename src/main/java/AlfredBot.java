@@ -66,6 +66,11 @@ public class AlfredBot extends TelegramLongPollingBot {
                     .setChatId(chat_id)
                     .setText(answer);
             startMsg.setReplyMarkup(keyboardMarkup);
+            try {
+                execute(startMsg);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
             alreadySent = true;
 
         }
